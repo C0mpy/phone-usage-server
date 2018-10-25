@@ -1,16 +1,16 @@
-
-<%= form_with scope: :survey, local: true do |form| %>
-  <p>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-  </p>
- 
-  <p>
-    <%= form.label :text %><br>
-    <%= form.text_area :text %>
-  </p>
- 
-  <p>
-    <%= form.submit %>
-  </p>
-<% end %>
+<h1>Create New Survey</h1><br>
+<form>
+  <div class="form-group">
+    <label for="survey[title]">Survey Title</label>
+    <input id="survey[title]" type="text" class="form-control" placeholder="Enter title">
+  </div>
+  <div class="form-group">
+    <label for="survey[description]">Survey Description</label>
+    <textarea id="survey[description]" name="survey[description]" class="form-control" rows="3" placeholder="Enter description"></textarea>
+  </div>
+  <div class="form-group form-check">
+    <input id="survey[active]" type="checkbox" class="form-check-input">
+    <label class="form-check-label" for="survey[active]">Set as currently active survey</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
