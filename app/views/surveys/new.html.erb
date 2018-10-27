@@ -1,16 +1,21 @@
-<h1>Create New Survey</h1><br>
-<form>
-  <div class="form-group">
-    <label for="survey[title]">Survey Title</label>
-    <input id="survey[title]" type="text" class="form-control" placeholder="Enter title">
+<div class="jumbotron jumbotron-fluid mx-auto">
+  <div class="container">
+    <h1 class="display-4">Create New Survey</h1>
+
+    <%= form_with scope: :survey, url: surveys_path,local: true, html: {class: "lead"} do |f| %>
+      <div class="form-group">
+        <%= f.label :title %>
+        <%= f.text_field :title, class: "form-control", placeholder: "Enter title" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :description %>
+        <%= f.text_area :description, class: "form-control", rows: "3", placeholder: "Enter description" %>
+      </div>
+      <div class="form-group form-check">
+        <%= f.check_box :is_active, class: "form-check-input" %>     
+        <label class="form-check-label">Set as  active survey</label>
+      </div>
+      <%= f.submit "Create Survey", class: "btn btn-primary"%>
+    <% end %>
   </div>
-  <div class="form-group">
-    <label for="survey[description]">Survey Description</label>
-    <textarea id="survey[description]" name="survey[description]" class="form-control" rows="3" placeholder="Enter description"></textarea>
-  </div>
-  <div class="form-group form-check">
-    <input id="survey[active]" type="checkbox" class="form-check-input">
-    <label class="form-check-label" for="survey[active]">Set as currently active survey</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</div>
