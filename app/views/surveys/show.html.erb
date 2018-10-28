@@ -1,6 +1,6 @@
 <div class="jumbotron jumbotron-fluid mx-auto">
   <div class="container">
-    <h1 class="display-4">Survey</h1><br>
+    <h1>Survey</h1><br>
     <table class="table table-hover table-dark">
       <tbody>
         <tr>
@@ -16,8 +16,27 @@
           <td><%= @survey.is_active %></td>
         </tr>
       </tbody>
+    </table>
+    <%= link_to 'Edit', edit_survey_path(@survey) %><br><br>
+
+    <h2>Survey's Questions</h2><br>
+    <table class="table table-dark">
+        <thead>
+            <th scope="col">No.</th>
+            <th scope="col">Content</th>
+            <th scope="col"></th>
+        </thead>
+        <tbody>
+            <% @survey.questions.each do |question| %>
+                <tr>
+                    <td><%= question.id %></td>
+                    <td><%= question.content %></td>
+                    <td><%= link_to 'Edit', edit_survey_path(survey) %></td>
+                </tr>
+            <% end %>
+        </tbody>
     </table><br>
-    <%= link_to 'Edit', edit_survey_path(@survey) %> |
+    <%= link_to 'New Question', new_survey_question_path(:id)%><br>
     <%= link_to 'Back', surveys_path %>
   </div>
 </div>

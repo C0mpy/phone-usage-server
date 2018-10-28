@@ -1,0 +1,20 @@
+<%= form_with scope: :question, local: true, html: {class: "lead"} do |f| %>
+    <% if @question.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+        <h4>
+        <%= pluralize(@question.errors.count, "error") %> prohibited
+        this question from being saved:
+        </h4>
+        <ul>
+        <% @question.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+        </ul>
+    </div>
+    <% end %>
+
+    <div class="form-group">
+        <%= f.label :content %>
+        <%= f.text_area :content, class: "form-control", placeholder: "Enter content", rows: "3" %>
+    </div>
+<% end %><br>
