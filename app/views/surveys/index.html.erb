@@ -7,6 +7,7 @@
             <th scope="col">Description</th>
             <th scope="col">Is Active</th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </thead>
         <tbody>
             <% @surveys.each do |survey| %>
@@ -15,6 +16,7 @@
                     <td><%= survey.description %></td>
                     <td><%= survey.is_active%></td>
                     <td><%= link_to 'Show', survey_path(survey) %></td>
+                    <td><%= link_to 'Edit', edit_survey_path(survey) %></td>
                 </tr>
             <% end %>
         </tbody>
