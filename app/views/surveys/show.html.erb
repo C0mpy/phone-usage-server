@@ -31,12 +31,12 @@
                 <tr>
                     <td><%= question.id %></td>
                     <td><%= question.content %></td>
-                    <td><%= link_to 'Edit', edit_survey_path(survey) %></td>
+                    <td><%= link_to 'Edit', edit_survey_path(@survey) %></td>
                 </tr>
             <% end %>
         </tbody>
+        <%= link_to 'New Question', new_survey_question_path(@survey.id)%><br>
     </table><br>
-    <%= link_to 'New Question', new_survey_question_path(:id)%><br>
     <%= link_to 'Back', surveys_path %>
   </div>
 </div>

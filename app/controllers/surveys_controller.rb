@@ -21,11 +21,11 @@ class SurveysController < ApplicationController
 
 		if @survey.save
 			redirect_to @survey
-		  else
+			else
 			render 'new'
-		  end
+			end
 	end
-
+	
 	def update
 		@survey = Survey.find(params[:id])
 	   
