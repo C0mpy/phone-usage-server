@@ -5,12 +5,6 @@ class QuestionsController < ApplicationController
   end
 
 	def create
-		Rails.logger.warn params["content"]
-		Rails.logger.warn params["content"]
-		Rails.logger.warn params["content"]
-		Rails.logger.warn params["content"]
-		Rails.logger.warn params["content"]
-		Rails.logger.warn params["content"]
 		@question = Question.new(question_params)
 
 		if @question.save

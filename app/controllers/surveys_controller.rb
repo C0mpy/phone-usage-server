@@ -19,15 +19,23 @@ class SurveysController < ApplicationController
 	def create
 		@survey = Survey.new(survey_params)
 
+		if @survey.is_active
+			deactivate_all_surveys
+		end
+
 		if @survey.save
 			redirect_to @survey
-			else
+		else
 			render 'new'
-			end
+		end
 	end
 	
 	def update
 		@survey = Survey.find(params[:id])
+
+    if params[:survey][:is_active]
+      deactivate_all_surveys
+    end
 	   
 		if @survey.update(survey_params)
 		  redirect_to @survey
@@ -39,6 +47,11 @@ class SurveysController < ApplicationController
 	private
 		def survey_params
 			params.require(:survey).permit(:title, :description, :is_active)
+		end
+
+		def deactivate_all_surveys
+			sql = 'UPDATE surveys SET is_active = false'
+			ActiveRecord::Base.connection.execute(sql)
 		end
 	
 end
