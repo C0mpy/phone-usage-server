@@ -7,4 +7,6 @@ Rails.application.routes.draw do
     resources :questions
   end
 
+  resources :question_responses
+
 end
