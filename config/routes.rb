@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   end
 
   resources :question_responses
+  resources :survey_results
 
 end
