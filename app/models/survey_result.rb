@@ -1,4 +1,4 @@
 class SurveyResult < ApplicationRecord
-  validates :survey_id, presence: true
+  belongs_to :survey, required: true
   validates :user_uuid, presence: true
 end
