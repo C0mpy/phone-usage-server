@@ -39,8 +39,18 @@ class SurveysController < ApplicationController
 	   
 		if @survey.update(survey_params)
 		  redirect_to @survey
-		else
+		else  
 		  render 'edit'
+		end
+	end
+
+	def get_active
+		survey = Survey.find_by(is_active: :true)
+		questions = Question.where(survey_id: survey.id)
+		data = {survey: survey, questions: questions}
+		respond_to do |format|
+			msg = { :status => "ok", data: data }
+			format.json  { render :json => msg }
 		end
 	end
 

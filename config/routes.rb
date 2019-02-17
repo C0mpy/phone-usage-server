@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     resources :questions
   end
 
+  get '/active-survey' => 'surveys#get_active'
+
   resources :question_responses
   resources :survey_results
   resources :user_results

@@ -18,6 +18,11 @@ class SurveyResultsController < ApplicationController
 				question: question, survey_result: survey_result)
 			question_response.save
 		}
+
+		respond_to do |format|
+			msg = { :status => "ok", data: {survey_result_id: survey_result.id} }
+			format.json  { render :json => msg }
+		end
 	end
 
 	def show
@@ -26,7 +31,6 @@ class SurveyResultsController < ApplicationController
 		@survey = Survey.find(survey_result[:survey_id])
 		@question_responses = QuestionResponse.where(survey_result_id: survey_result_id)
 
-		puts "\n\n\n\n"
 		@question_responses.each { |qr|
 			qr.question = Question.find(qr.question_id)
 		}
