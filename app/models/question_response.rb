@@ -1,5 +1,5 @@
 class QuestionResponse < ApplicationRecord
-  has_one :question, required: true
-  validates :response, presence: true
+  belongs_to :question
   belongs_to :survey_result
+  validates :response, presence: true
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_27_211307) do
+ActiveRecord::Schema.define(version: 2019_02_16_130037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,9 +34,8 @@ ActiveRecord::Schema.define(version: 2018_11_27_211307) do
   end
 
   create_table "survey_results", force: :cascade do |t|
-    t.bigint "survey_id_id"
-    t.string "user_uuid"
-    t.index ["survey_id_id"], name: "index_survey_results_on_survey_id_id"
+    t.bigint "survey_id"
+    t.index ["survey_id"], name: "index_survey_results_on_survey_id"
   end
 
   create_table "surveys", force: :cascade do |t|
@@ -47,7 +46,17 @@ ActiveRecord::Schema.define(version: 2018_11_27_211307) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_results", force: :cascade do |t|
+    t.bigint "survey_result_id"
+    t.string "user_uuid"
+    t.integer "time_spent_on_phone"
+    t.datetime "period_start"
+    t.datetime "period_end"
+    t.index ["survey_result_id"], name: "index_user_results_on_survey_result_id"
+  end
+
   add_foreign_key "question_responses", "questions"
   add_foreign_key "question_responses", "survey_results"
   add_foreign_key "questions", "surveys"
+  add_foreign_key "user_results", "survey_results"
 end

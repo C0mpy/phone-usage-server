@@ -1,0 +1,27 @@
+<div class="jumbotron jumbotron-fluid mx-auto">
+  <div class="container">
+    <h1 class="display-4">Show All User Results</h1><br>
+    <table class="table table-dark">
+        <thead>
+            <th scope="col">User UUID</th>
+            <th scope="col">Period Start</th>
+            <th scope="col">Period End</th>
+            <th scope="col">Time Spent On Phone</th>
+            <th scope="col">Survey Result</th>
+        </thead>
+        <tbody>
+            <% @user_results.each do |user_result| %>
+                <tr>
+                    <td><%= user_result.user_uuid %></td>
+                    <td><%= user_result.period_start %></td>
+                    <td><%= user_result.period_end %></td>
+                    <td><%= user_result.time_spent_on_phone / (1000 * 60) % 60 %> minutes</td>
+                    <td><%= link_to user_result.survey_result_id, survey_result_path(user_result.survey_result_id) %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table><br>
+    <%= link_to 'Show Surveys', surveys_path%>
+  </div>
+</div>
