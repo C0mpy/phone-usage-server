@@ -46,10 +46,11 @@ class SurveysController < ApplicationController
 
 	def get_active
 		survey = Survey.find_by(is_active: :true)
-		questions = Question.where(survey_id: survey.id)
-		data = {survey: survey, questions: questions}
+		questions = Question.select('id, content').where(survey_id: survey.id)
+		
 		respond_to do |format|
-			msg = { :status => "ok", data: data }
+			msg = {id: survey.id, title: survey.title, 
+				description: survey.description, questions: questions}
 			format.json  { render :json => msg }
 		end
 	end

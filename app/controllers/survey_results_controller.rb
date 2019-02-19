@@ -6,12 +6,11 @@ class SurveyResultsController < ApplicationController
 
 	skip_before_action :verify_authenticity_token
 	def create
-		survey = Survey.find(params[:survey_id])
+		survey = Survey.find(params[:surveyId])
 		survey_result = SurveyResult.new(survey: survey)
 		survey_result.save
-		question_responses = []
-		params[:question_responses].each { |qr|
-			question = Question.find(qr[:question_id])
+		params[:questionResponses].each { |qr|
+			question = Question.find(qr[:question][:id])
 			response = qr[:response]
 
 			question_response = QuestionResponse.new(response: response, 
@@ -20,8 +19,8 @@ class SurveyResultsController < ApplicationController
 		}
 
 		respond_to do |format|
-			msg = { :status => "ok", data: {survey_result_id: survey_result.id} }
-			format.json  { render :json => msg }
+			msg = {survey_result_id: survey_result.id}
+			format.json { render :json => msg }
 		end
 	end
 
@@ -38,7 +37,7 @@ class SurveyResultsController < ApplicationController
 	end
 	
 	def survey_result_params
-		params.permit(:survey_id, :question_responses)
+		params.permit(:surveyId, :questionResponses)
 	end
 	
 end

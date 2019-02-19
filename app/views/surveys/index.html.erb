@@ -3,6 +3,7 @@
     <h1 class="display-4">Show All Surveys</h1><br>
     <table class="table table-dark">
         <thead>
+            <th scope="col">ID</th>
             <th scope="col">Title</th>
             <th scope="col">Description</th>
             <th scope="col">Is Active</th>
@@ -12,6 +13,7 @@
         <tbody>
             <% @surveys.each do |survey| %>
                 <tr>
+                    <td><%= survey.id %></td>
                     <td><%= survey.title %></td>
                     <td><%= survey.description %></td>
                     <td><%= survey.is_active%></td>

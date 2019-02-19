@@ -6,15 +6,18 @@ class UserResultsController < ApplicationController
 
 	skip_before_action :verify_authenticity_token
 	def create
+  
+    puts params.inspect
 		survey_result = SurveyResult.find(params[:survey_result_id])
 
-		period_start = Time.at(params[:period_start]/1000)
-		period_end = Time.at(params[:period_end]/1000)
+		period_start = Time.at(params[:period_start].to_i/1000)
+		period_end = Time.at(params[:period_end].to_i/1000)
 
 		user_result = UserResult.new(survey_result: survey_result, user_uuid: params[:user_uuid],
 			time_spent_on_phone: params[:time_spent_on_phone], period_start: period_start, 
 			period_end: period_end)
 		user_result.save
+		render status: 200, json: @controller.to_json
 	end
 	
 	def user_result_params
