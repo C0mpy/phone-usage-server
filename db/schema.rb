@@ -34,8 +34,7 @@ ActiveRecord::Schema.define(version: 2019_02_16_130037) do
   end
 
   create_table "survey_results", force: :cascade do |t|
-    t.bigint "survey_id"
-    t.index ["survey_id"], name: "index_survey_results_on_survey_id"
+    t.string "survey_id"
   end
 
   create_table "surveys", force: :cascade do |t|
