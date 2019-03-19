@@ -6,10 +6,10 @@ class SurveyResultsController < ApplicationController
 
 	skip_before_action :verify_authenticity_token
 	def create
-		survey = Survey.find(params[:surveyId])
+		survey = Survey.find(params[:survey_id])
 		survey_result = SurveyResult.new(survey: survey)
 		survey_result.save
-		params[:questionResponses].each { |qr|
+		params[:question_responses].each { |qr|
 			question = Question.find(qr[:question][:id])
 			response = qr[:response]
 
