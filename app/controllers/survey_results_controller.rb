@@ -1,4 +1,4 @@
-class SurveyResultsController < ApplicationController
+class SurveyResultsController < ActionController::Base
 
 	def index
 		@survey_results = SurveyResult.all
@@ -37,7 +37,7 @@ class SurveyResultsController < ApplicationController
 	end
 	
 	def survey_result_params
-		params.permit(:surveyId, :questionResponses)
+		params.permit(:survey_id, :question_responses)
 	end
 	
 end

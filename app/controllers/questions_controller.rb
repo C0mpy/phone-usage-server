@@ -1,4 +1,4 @@
-class QuestionsController < ApplicationController
+class QuestionsController < ActionController::Base
 
   def new
     @question = Question.new
@@ -16,7 +16,8 @@ class QuestionsController < ApplicationController
 
 	private
     def question_params
-		  params.permit(:content, :survey_id)
+			params.required(:content)
+			params.permit(:survey_id)
 		end
 
 end
