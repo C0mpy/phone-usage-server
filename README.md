@@ -1,4 +1,4 @@
-# README
+# Phone Usage RoR Server
 
 Phone Usage Server module for my Bachelor's degree project.
 
