@@ -10,7 +10,7 @@ To run the Phone-Usage server on your local machine, you will need:
 2. [Ruby 2.5.1 and Rails](https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-18-04)
 3. [Postgres](https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-18-04)
 	execute steps 1 - 3
-	at step 3 create a superuser role named `dev` and a database named `phone-usage-server_development`
+	at step 3 create a superuser role named `dev` with password `dev` and a database named `phone-usage-server_development`
 4. `$ sudo apt-get install libpq-dev`
 
 ### Installing
@@ -24,6 +24,10 @@ A step by step series of examples that tell you how to get a development env run
 	```
 	$ bundler install
 	$ bundler update
+	```
+3. execute migrations and seed the data
+	```$ rails db:migrate
+	   $ rails db:seed
 	```
 3. start the server 
 	```$ rails server```
