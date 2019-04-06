@@ -1,4 +1,4 @@
-class SurveyResultsController < ActionController::Base
+class SurveyResultsController < ApplicationController
 
 	def index
 		@survey_results = SurveyResult.all

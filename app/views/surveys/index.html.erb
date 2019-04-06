@@ -1,14 +1,13 @@
-<div class="jumbotron jumbotron-fluid mx-auto">
-  <div class="container">
-    <h1 class="display-4">Show All Surveys</h1><br>
-    <table class="table table-dark">
+
+    <h1>Show All Surveys</h1><br>
+    <table>
         <thead>
-            <th scope="col">ID</th>
-            <th scope="col">Title</th>
-            <th scope="col">Description</th>
-            <th scope="col">Is Active</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Is Active</th>
+            <th></th>
+            <th></th>
         </thead>
         <tbody>
             <% @surveys.each do |survey| %>
@@ -25,5 +24,3 @@
     </table><br>
     <%= link_to 'New Survey', new_survey_path%><br>
     <%= link_to 'Back', user_results_path %>
-  </div>
-</div>

@@ -2,18 +2,18 @@
 <html>
   <head>
     <title>PhoneUsageServer</title>
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <div id="main-container" class="container">
-      <div class="row">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--3-col"></div>
+      <div class="mdl-cell mdl-cell--6-col">
         <%= yield %>
       </div>
+      <div class="mdl-cell mdl-cell--3-col"></div>
     </div>
   </body>
 </html>

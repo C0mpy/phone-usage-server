@@ -1,4 +1,4 @@
-class UserResultsController < ActionController::Base
+class UserResultsController < ApplicationController
 
 	def index
 		@user_results = UserResult.all
