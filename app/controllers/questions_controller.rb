@@ -1,7 +1,11 @@
 class QuestionsController < ApplicationController
 
   def new
-    @question = Question.new
+		@question = Question.new
+		puts "\n\n\n\n\n\n\n\n"
+		@question[:survey_id] = params[:survey_id]
+		puts @question.inspect
+		render 'new'
   end
 
 	def create
@@ -17,7 +21,7 @@ class QuestionsController < ApplicationController
 	private
     def question_params
 			params.required(:content)
-			params.permit(:survey_id)
+			params.permit(:survey_id, :content)
 		end
 
 end

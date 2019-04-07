@@ -1,8 +1,0 @@
-<%= form_with model: @survey_question, url: survey_questions_url, local: true, html: {class: "lead"} do |f| %>
-
-    <div class="form-group">
-        <%= f.label :content %>
-        <%= f.text_area :content, class: "form-control", placeholder: "Enter content", rows: "3" %>
-    </div>
-    <%= f.submit class: "btn btn-primary"%>
-<% end %><br>

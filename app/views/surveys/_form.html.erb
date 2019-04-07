@@ -1,28 +1,20 @@
+<%= stylesheet_link_tag  "surveys/new.css" %>
 <%= form_with model: @survey, local: true, html: {class: "lead"} do |f| %>
-  <% if @survey.errors.any? %>
-    <div class="alert alert-danger" role="alert">
-      <h4>
-        <%= pluralize(@survey.errors.count, "error") %> prohibited this survey from being saved:
-      </h4>
-      <ul>
-        <% @survey.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<div class="form-group mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+  <label class="mdl-textfield__label" for="survey_title">Title</label>
+  <%= f.text_field :title, class: "form-control mdl-textfield__input", placeholder: "Enter title" %>
+</div>
+<div class="form-group mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+  <label class="mdl-textfield__label" for="survey_description">Description</label>
+  <%= f.text_area :description, class: "form-control mdl-textfield__input", rows: "3", placeholder: "Enter description" %>
+</div>
+<div class="form-group form-check mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+  <label class="form-check-label">Set as active survey</label>
+  <%= f.check_box :is_active, class: "form-check-input" %>
+</div>
 
-  <div class="form-group">
-    <%= f.label :title %>
-    <%= f.text_field :title, class: "form-control", placeholder: "Enter title" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :description %>
-    <%= f.text_area :description, class: "form-control", rows: "3", placeholder: "Enter description" %>
-  </div>
-  <div class="form-group form-check">
-    <%= f.check_box :is_active, class: "form-check-input" %>     
-    <label class="form-check-label">Set as  active survey</label>
-  </div>
-  <%= f.submit class: "btn btn-primary"%>
-<% end %><br>
+<div class="mdl-card__actions mdl-card--border">
+  <%= f.submit :class => "mdl-button mdl-js-button mdl-button--accent" %>
+  <%= link_to 'Back', surveys_path, :class => "mdl-button mdl-js-button mdl-button--accent" %>
+</div>
+<% end %>

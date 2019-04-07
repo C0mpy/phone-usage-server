@@ -1,42 +1,42 @@
-<div class="jumbotron jumbotron-fluid mx-auto">
-  <div class="container">
-    <h1>Survey</h1><br>
-    <table class="table table-hover table-dark">
-      <tbody>
-        <tr>
-          <td><strong>Title</strong></td>
-          <td><%= @survey.title %></td>
-        </tr>
-        <tr>
-          <td><strong>Description</strong></td>
-          <td><%= @survey.description %></td>
-        </tr>
-        <tr>
-          <td><strong>Is Active</strong></td>
-          <td><%= @survey.is_active %></td>
-        </tr>
-      </tbody>
-    </table>
-    <%= link_to 'Edit', edit_survey_path(@survey) %><br><br>
+<h2>Survey</h2><br>
+<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+  <tbody>
+    <tr>
+      <td class="mdl-data-table__cell--non-numeric"><strong>Title</strong></td>
+      <td class="mdl-data-table__cell--non-numeric"><%= @survey.title %></td>
+    </tr>
+    <tr>
+      <td class="mdl-data-table__cell--non-numeric"><strong>Description</strong></td>
+      <td class="mdl-data-table__cell--non-numeric"><%= @survey.description %></td>
+    </tr>
+    <tr>
+      <td class="mdl-data-table__cell--non-numeric"><strong>Is Active</strong></td>
+      <td class="mdl-data-table__cell--non-numeric"><%= @survey.is_active %></td>
+    </tr>
+  </tbody>
+</table><br>
+<div>
+  <%= button_to 'Edit', edit_survey_path(@survey), :class => "mdl-button mdl-js-button mdl-button--accent", :method => :get %>
+</div>
 
-    <h2>Survey's Questions</h2><br>
-    <table class="table table-dark">
-        <thead>
-            <th scope="col">No.</th>
-            <th scope="col">Content</th>
-            <th scope="col"></th>
-        </thead>
-        <tbody>
-            <% @survey.questions.each do |question| %>
-                <tr>
-                    <td><%= question.id %></td>
-                    <td><%= question.content %></td>
-                    <td><%= link_to 'Edit', edit_survey_path(@survey) %></td>
-                </tr>
-            <% end %>
-        </tbody>
-    </table>
-    <%= link_to 'New Question', new_survey_question_path(@survey.id)%><br>
-    <%= link_to 'Back', surveys_path %>
-  </div>
+<h2>Survey's Questions</h2>
+<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+  <thead>
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric">ID</th>
+      <th class="mdl-data-table__cell--non-numeric">Content</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @survey.questions.each do |question| %>
+    <tr>
+      <td class="mdl-data-table__cell"><%= question.id %></td>
+      <td class="mdl-data-table__cell--non-numeric"><%= question.content %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="mdl-card__actions mdl-card--border">
+  <%= button_to 'New Question', new_survey_question_path(@survey.id), :class => "mdl-button mdl-js-button mdl-button--accent", :method => :get %>
+  <%= button_to 'Back', surveys_path, :class => "mdl-button mdl-js-button mdl-button--accent", :method => :get %>
 </div>

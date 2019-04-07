@@ -12,3 +12,14 @@
  *
  */
  @import "material";
+
+ .center-component {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .demo-card-square > .mdl-card__title {
+    color: #fff;
+    background: url(asset-path('dog.png')) bottom right 15% no-repeat #46B6AC;
+  }
