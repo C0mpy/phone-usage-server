@@ -54,8 +54,16 @@ ActiveRecord::Schema.define(version: 2019_02_16_130037) do
     t.index ["survey_result_id"], name: "index_user_results_on_survey_result_id"
   end
 
+  create_table "phone_usages", force: :cascade do |t|
+    t.bigint "user_result_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.index ["user_result_id"], name: "index_phone_usages_on_user_result_id"
+  end
+
   add_foreign_key "question_responses", "questions"
   add_foreign_key "question_responses", "survey_results"
   add_foreign_key "questions", "surveys"
   add_foreign_key "user_results", "survey_results"
+  add_foreign_key "phone_usages", "user_results"
 end
