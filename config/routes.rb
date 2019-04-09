@@ -7,10 +7,11 @@ Rails.application.routes.draw do
     resources :questions
   end
 
-  get '/active-survey' => 'surveys#get_active'
-
   resources :question_responses
   resources :survey_results
-  resources :user_results
+  resources :user_results, only: [:index, :create]
+
+  get '/active-survey', to: 'surveys#get_active'
+  get '/users/:user_uuid/user-results', to: 'user_results#show', as: 'user_results_for_user'
 
 end

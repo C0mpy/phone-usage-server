@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_16_130037) do
+ActiveRecord::Schema.define(version: 2019_04_08_015125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "phone_usages", force: :cascade do |t|
+    t.bigint "user_result_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.index ["user_result_id"], name: "index_phone_usages_on_user_result_id"
+  end
 
   create_table "question_responses", force: :cascade do |t|
     t.integer "response"
@@ -48,22 +55,14 @@ ActiveRecord::Schema.define(version: 2019_02_16_130037) do
   create_table "user_results", force: :cascade do |t|
     t.bigint "survey_result_id"
     t.string "user_uuid"
-    t.integer "time_spent_on_phone"
     t.datetime "period_start"
     t.datetime "period_end"
     t.index ["survey_result_id"], name: "index_user_results_on_survey_result_id"
   end
 
-  create_table "phone_usages", force: :cascade do |t|
-    t.bigint "user_result_id"
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.index ["user_result_id"], name: "index_phone_usages_on_user_result_id"
-  end
-
+  add_foreign_key "phone_usages", "user_results"
   add_foreign_key "question_responses", "questions"
   add_foreign_key "question_responses", "survey_results"
   add_foreign_key "questions", "surveys"
   add_foreign_key "user_results", "survey_results"
-  add_foreign_key "phone_usages", "user_results"
 end

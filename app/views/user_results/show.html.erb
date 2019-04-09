@@ -1,0 +1,81 @@
+<script type="text/javascript">
+
+  // Load the Visualization API and the corechart package.
+  google.charts.load('current', { 'packages': ['corechart'] });
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.charts.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    var user_result_data = JSON.parse('<%= (@user_result_data.count) == 0 ? "[]" : @user_result_data.to_json.html_safe %>');
+    console.log("THIS IS THE USER RESULT DATA!");
+    console.log(JSON.stringify(user_result_data));
+    
+    var days = new Set();
+    user_result_data.forEach(function (user_result) {
+      days.add(milisToDate(user_result.phone_usage));
+    });
+    alert(days);  
+
+    var results = {};
+    user_result_data.forEach(function (user_result) {
+      var start_date_time_spent_list = parsePhoneUsageList(user_result.phone_usage);
+      start_date_time_spent_list.forEach(function (sdts) {
+        if(sdts["start_date"] in results) {
+          results[sdts["start_date"]] += sdts["time_spent_in_minutes"];
+        } else {
+          results[sdts["start_date"]] = 0;
+        }
+        days.add(milisToDate(user_result.phone_usage));
+      });
+    });
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('number', 'X');
+    data.addColumn('number', 'Time Spent On Phone');
+
+    for (var start_date in results) {
+      if (object.hasOwnProperty(start_date)) {
+        data.add([start_date, results[start_date]]);
+      }
+    }
+      
+    var options = {
+      hAxis: {
+        title: 'Time'
+      },
+      vAxis: {
+        title: 'Popularity'
+      }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+    chart.draw(data, options);
+  }
+
+  function milisToDate(miliseconds_list) {
+    var result = [];
+    miliseconds_list.forEach(function (miliseconds) {
+      result.add(new Date(miliseconds).getDate());
+    });
+    return result;
+  }
+
+  function parsePhoneUsageList(phone_usage_list) {
+    var start_date_time_spent_list = [];
+    phone_usage_list.forEach(function (phone_usage) {
+      var start_date = new Date(phone_usage.start_time).getDate();
+      var time_spent_in_minutes = Math.floor(phone_usage.end_time - phone_usage.start_time / 60000);
+      start_date_time_spent_list.add({"start_date": start_date, "time_spent_in_minutes": time_spent_in_minutes});
+    });
+    return start_date_time_spent_list;
+  }
+</script>
+
+<%= content_tag :div, '', id: 'user-result-data', data: @user_result_data %>
+<div id="chart_div"></div>

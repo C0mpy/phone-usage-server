@@ -1,4 +1,4 @@
-class UserResult < ApplicationRecord
+class PhoneUsage < ApplicationRecord
   belongs_to :user_result
   validates :start_time, presence: true
   validates :end_time, presence: true

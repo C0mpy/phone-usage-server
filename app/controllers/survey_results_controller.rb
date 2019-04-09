@@ -10,7 +10,7 @@ class SurveyResultsController < ApplicationController
 		survey_result = SurveyResult.new(survey: survey)
 		survey_result.save
 		params[:question_responses].each { |qr|
-			question = Question.find(qr[:question][:id])
+			question = Question.find(qr[:question_id])
 			response = qr[:response]
 
 			question_response = QuestionResponse.new(response: response, 
