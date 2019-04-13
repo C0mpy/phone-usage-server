@@ -2,9 +2,6 @@ class UserResultsController < ApplicationController
 
 	def index
 		@user_results = UserResult.all
-
-		puts "\n\n\n\n\n\n\n\n\n\n"
-		puts @user_results.inspect
 	end
 
 	skip_before_action :verify_authenticity_token
@@ -19,32 +16,17 @@ class UserResultsController < ApplicationController
 		user_result.save
 
 		params[:phone_usage].each { |pu|
-			user_result.phone_usages.create(start_time: pu[:start_time], end_time: pu[:end_time])
+			puts Time.at(pu["start_time"].to_i/1000).inspect
+			puts Time.at(pu["end_time"].to_i/1000).inspect
+			user_result.phone_usages.create(start_time: Time.at(pu["start_time"].to_i/1000), end_time: Time.at(pu["end_time"].to_i/1000))
 		}
 
 		render status: 200, json: @controller.to_json
 	end
 
 	def show
-		@user_result_data = []
-		@user_result = UserResult.where(user_uuid: params[:user_uuid])
-		puts "\n\n\n\n\n\n\n\n\n\n"
-
-		@user_result.each { |ur|
-			puts "searching..."
-
-			puts PhoneUsage.where(user_result: ur.id).inspect
-
-			ur.phone_usages << PhoneUsage.where(user_result: ur.id)
-			@user_result_data << ur
-		}
-
-		puts "\nTOTAL RESULT"
-		puts @user_result_data.inspect
-	end
-	
-	def user_result_params
-		params.required(:survey_result_id, :user_uuid, :period_start, :period_end)
+		@user_results = UserResult.includes(:phone_usages).where(user_uuid: params[:user_uuid])
+		@user_results_json = @user_results.as_json(include: :phone_usages)
 	end
 	
 end
