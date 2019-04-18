@@ -2,9 +2,7 @@ class QuestionsController < ApplicationController
 
   def new
 		@question = Question.new
-		puts "\n\n\n\n\n\n\n\n"
 		@question[:survey_id] = params[:survey_id]
-		puts @question.inspect
 		render 'new'
   end
 
