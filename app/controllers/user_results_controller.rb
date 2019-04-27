@@ -1,7 +1,19 @@
 class UserResultsController < ApplicationController
 
 	def index
-		@user_results = UserResult.all
+		@user_uuids = UserResult.distinct.pluck(:user_uuid)
+		@user_results = []
+
+		@user_uuids.each { |uuid|
+			sql = "SELECT sum(pu.end_time - pu.start_time) 
+				   FROM user_results ur JOIN phone_usages pu on ur.id = pu.user_result_id
+				   WHERE user_uuid = '" + uuid + "'"
+
+			total_time_spent_on_phone = ActiveRecord::Base.connection.execute(sql).values[0][0]
+			@user_results << {user_uuid: uuid, total_time_spent_on_phone: total_time_spent_on_phone}
+
+			puts @user_results.inspect
+		}
 	end
 
 	skip_before_action :verify_authenticity_token
