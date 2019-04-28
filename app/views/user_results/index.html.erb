@@ -10,7 +10,8 @@
         <% @user_results.each do |user_result| %>
         <tr>
             <td class="mdl-data-table__cell--non-numeric">
-                <%= link_to user_result[:user_uuid], user_results_for_user_path(user_result[:user_uuid]) %></td>
+                <%= link_to user_result[:user_uuid], user_results_for_user_path(user_result[:user_uuid]) %>
+            </td>
             <td class="mdl-data-table__cell--non-numeric"><%= user_result[:total_time_spent_on_phone] %></td>
         </tr>
         <% end %>

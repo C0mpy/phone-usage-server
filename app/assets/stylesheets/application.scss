@@ -23,3 +23,25 @@
     color: #fff;
     background: url(asset-path('dog.png')) bottom right 15% no-repeat #46B6AC;
   }
+
+.fixed_header{
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.fixed_header tbody{
+  display:block;
+  width: 100%;
+  overflow: auto;
+  max-height: 350px;
+}
+
+.fixed_header thead tr {
+   display: block;
+}
+
+.fixed_header th, .fixed_header td {
+  padding: 5px;
+  text-align: left;
+  width: 200px;
+}

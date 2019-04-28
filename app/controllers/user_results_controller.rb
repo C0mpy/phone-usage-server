@@ -39,6 +39,11 @@ class UserResultsController < ApplicationController
 	def show
 		@user_results = UserResult.includes(:phone_usages).where(user_uuid: params[:user_uuid])
 		@user_results_json = @user_results.as_json(include: :phone_usages)
+
+		@phone_usage_micro_intervals = []
+		@user_results.each { |user_result|
+			@phone_usage_micro_intervals.concat(user_result.phone_usages);
+		}
 	end
 	
 end
