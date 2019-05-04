@@ -13,5 +13,6 @@ Rails.application.routes.draw do
 
   get '/active-survey', to: 'surveys#get_active'
   get '/users/:user_uuid/user-results', to: 'user_results#show', as: 'user_results_for_user'
+  get '/user-results/all_data', to: 'user_results#all_data', as: 'all_data'
 
 end

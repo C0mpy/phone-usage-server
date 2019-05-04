@@ -45,5 +45,19 @@ class UserResultsController < ApplicationController
 			@phone_usage_micro_intervals.concat(user_result.phone_usages);
 		}
 	end
+
+	def all_data
+		surveys = Survey.all
+		user_results = UserResult.includes(:phone_usages, :survey_result).all
+		render :json => {"surveys" => surveys, 
+			"user_results" => user_results.as_json(
+				include: :phone_usages, 
+					include: { survey_result: { 
+						include: { question_responses: {
+							include: { question: { only: [:id, :content]}},
+							only: [:id, :response]
+						}
+					}}})}.to_json
+	end
 	
 end
