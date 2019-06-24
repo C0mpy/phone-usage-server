@@ -2,6 +2,7 @@ class SurveysController < ApplicationController
 
 	def index
 		@surveys = Survey.all
+		render :json => @surveys.to_json
 	end
 
 	def show

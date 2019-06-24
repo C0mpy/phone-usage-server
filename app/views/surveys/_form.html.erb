@@ -8,9 +8,12 @@
   <label class="mdl-textfield__label" for="survey_description">Description</label>
   <%= f.text_area :description, class: "form-control mdl-textfield__input", rows: "3", placeholder: "Enter description" %>
 </div>
-<div class="form-group form-check mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-  <label class="form-check-label">Set as active survey</label>
-  <%= f.check_box :is_active, class: "form-check-input" %>
+
+<div class="form-group">
+  <label class="mdl-datefield__label">Can be started from:</label>
+  <%= f.date_field :can_be_started_from, class: "form-control", min: Date.today, order: [:day, :month, :year] %>
+  <label class="mdl-datefield__label">can be started until:</label>
+  <%= f.date_field :can_be_started_until, class: "form-control", min: can_be_started_from, order: [:day, :month, :year] %>
 </div>
 
 <div class="mdl-card__actions mdl-card--border">

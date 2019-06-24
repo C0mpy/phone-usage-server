@@ -5,16 +5,20 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-survey1 = Survey.create(title: "This is the inital Survey deployed to mobile devices.", 
-    description: "Please answer questions on a scale 1 - 5",
-    is_active: false)
 
+interval1 = Interval.create(start_time: Date.yesterday)
+survey1 = Survey.create(
+    title: "This is the inital Survey deployed to mobile devices.", 
+    description: "Please answer questions on a scale 1 - 5",
+    interval_id: interval1)
+    
 Question.create(content: "How would you rate your quality of sleep?", survey: survey1)
 Question.create(content: "How would you rate your attention span?", survey: survey1)
 
-survey2 = Survey.create(title: "Survey from rails server.", 
-            description: "This is your initial survey. Please answer the questions listed on a scale of 1 - 5.",
-            is_active: true)
+survey2 = Survey.create(
+    title: "Survey from rails server.", 
+    description: "This is your initial survey. Please answer the questions listed on a scale of 1 - 5.",
+    interval_id: interval1)
 
 Question.create(content: "How would you rate your ability to multitask?", survey: survey2)
 Question.create(content: "Would you describe yourself as a tech addict?", survey: survey2)
