@@ -1,4 +1,5 @@
 class SurveysController < ApplicationController
+	protect_from_forgery prepend: true
 
 	def index
 		@surveys = Survey.includes(:intervals).all
@@ -32,5 +33,6 @@ class SurveysController < ApplicationController
 		def survey_params
 			params.require(:survey).permit(:title, :description)
 		end
+	
 	
 end
