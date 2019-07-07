@@ -6,8 +6,8 @@ class SurveysController < ApplicationController
 	end
 
 	def show
-		@survey = Survey.find(params[:id])
-		render :json => @survey.to_json
+		@survey = Survey.includes(:intervals).find(params[:id])
+		render :json => @survey.as_json(include: :intervals) .to_json
 	end
 
 	def new

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_23_190845) do
+ActiveRecord::Schema.define(version: 2019_07_07_164058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,15 @@ ActiveRecord::Schema.define(version: 2019_06_23_190845) do
     t.index ["survey_id"], name: "index_questions_on_survey_id"
   end
 
+  create_table "survey_intervals", force: :cascade do |t|
+    t.bigint "survey_id"
+    t.bigint "interval_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["interval_id"], name: "index_survey_intervals_on_interval_id"
+    t.index ["survey_id"], name: "index_survey_intervals_on_survey_id"
+  end
+
   create_table "survey_results", force: :cascade do |t|
     t.bigint "survey_id"
     t.string "user_uuid"
@@ -54,17 +63,16 @@ ActiveRecord::Schema.define(version: 2019_06_23_190845) do
   create_table "surveys", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.bigint "interval_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["interval_id"], name: "index_surveys_on_interval_id"
   end
 
   add_foreign_key "question_responses", "questions"
   add_foreign_key "question_responses", "survey_results"
   add_foreign_key "questions", "surveys"
+  add_foreign_key "survey_intervals", "intervals"
+  add_foreign_key "survey_intervals", "surveys"
   add_foreign_key "survey_results", "surveys"
   add_foreign_key "survey_results_intervals", "intervals"
   add_foreign_key "survey_results_intervals", "survey_results"
-  add_foreign_key "surveys", "intervals"
 end
