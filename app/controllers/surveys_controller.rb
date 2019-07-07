@@ -1,13 +1,13 @@
 class SurveysController < ApplicationController
 
 	def index
-		@surveys = Survey.all
-		render :json => @surveys.to_json
+		@surveys = Survey.includes(:intervals).all
+		render :json => @surveys.as_json(include: :intervals).to_json
 	end
 
 	def show
 		@survey = Survey.includes(:intervals).find(params[:id])
-		render :json => @survey.as_json(include: :intervals) .to_json
+		render :json => @survey.as_json(include: :intervals).to_json
 	end
 
 	def new
