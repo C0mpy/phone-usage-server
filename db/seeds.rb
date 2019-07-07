@@ -23,5 +23,12 @@ SurveyInterval.create!(survey: survey2, interval: interval2)
 
 Question.create(content: "How would you rate your ability to multitask?", survey: survey2)
 Question.create(content: "Would you describe yourself as a tech addict?", survey: survey2)
-Question.create(content: "Would you describe yourself as forgetful?", survey: survey2)
-Question.create(content: "How would you rate your face-to-face interactions?", survey: survey2)
+
+interval3 = Interval.create!(start_time: 1.year.from_now, end_time: 2.year.from_now)
+survey3 = Survey.create(
+    title: "Future Survey, still in the making", 
+    description: "This survey is not finished yet...")
+SurveyInterval.create!(survey: survey3, interval: interval3)
+
+Question.create(content: "Would you describe yourself as forgetful?", survey: survey3)
+Question.create(content: "How would you rate your face-to-face interactions?", survey: survey3)
