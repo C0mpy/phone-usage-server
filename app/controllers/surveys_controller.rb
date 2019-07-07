@@ -7,6 +7,7 @@ class SurveysController < ApplicationController
 
 	def show
 		@survey = Survey.find(params[:id])
+		render :json => @survey.to_json
 	end
 
 	def new
@@ -19,10 +20,6 @@ class SurveysController < ApplicationController
 
 	def create
 		@survey = Survey.new(survey_params)
-
-		if @survey.is_active
-			deactivate_all_surveys
-		end
 
 		if @survey.save
 			redirect_to @survey
@@ -59,11 +56,6 @@ class SurveysController < ApplicationController
 	private
 		def survey_params
 			params.require(:survey).permit(:title, :description, :is_active)
-		end
-
-		def deactivate_all_surveys
-			sql = 'UPDATE surveys SET is_active = false'
-			ActiveRecord::Base.connection.execute(sql)
 		end
 	
 end
