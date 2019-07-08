@@ -30,9 +30,8 @@ class SurveysController < ApplicationController
 	end
 
 	private
-		def survey_params
-			params.require(:survey).permit(:title, :description)
-		end
-	
+	def survey_params
+		params.permit([:id, :title, :description, :intervals])
+	end
 	
 end
