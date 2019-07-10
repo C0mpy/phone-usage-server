@@ -2,24 +2,37 @@ class SurveysController < ApplicationController
 	protect_from_forgery prepend: true  
 
 	def index
-		@surveys = Survey.includes(:intervals).all
-		render :json => @surveys.as_json(include: :intervals).to_json
+		surveys = Survey.includes("intervals").all
+		render :json => surveys.as_json(include: "intervals").to_json
 	end
 
 	def show
-		@survey = Survey.includes(:intervals).find(params[:id])
-		render :json => @survey.as_json(include: :intervals).to_json
+		id = params.require("id")
+		survey = Survey.includes("intervals").find(id)
+		render :json => survey.as_json(include: "intervals").to_json
 	end
 	
 	def update
-		@survey = Survey.find(params[:id])
-		@survey.update(survey_params)
-		render :json => @survey.as_json(include: :intervals).to_json		
+		id = params.require("id")
+		req_survey = params.require("survey").permit("title", "description")
+		survey = Survey.find(id)
+		survey.update(req_survey)
+		if params["survey"]["intervals"].any?
+			req_interval = params["survey"].require("intervals").first.permit("id", "start_time", "end_time")
+			existing_interval = Interval.find(req_interval["id"])
+			existing_interval.update(req_interval)
+		end
+		render :json => survey.as_json(include: "intervals").to_json	
 	end
 
 	def create
-		@survey = Survey.create(survey_params)
-		render :json => @survey.as_json(include: :intervals).to_json		
+		survey = Survey.create(survey_params.except("intervals"))
+		if survey_params["intervals"].any?
+			interval = survey_params["intervals"].first
+			interval = Interval.create(interval)
+			SurveyInterval.create(survey: survey, interval: interval)
+		end
+		render :json => survey.as_json(include: "intervals").to_json	
 	end
 
 
@@ -36,9 +49,9 @@ class SurveysController < ApplicationController
 		end
 	end
 
-	private
+	private 
 	def survey_params
-		params.require(:survey).permit(:title, :description, :intervals)
+		params.require(:survey).permit(:title, :description, {intervals: [:start_time, :end_time]})
 	end
 
 	
