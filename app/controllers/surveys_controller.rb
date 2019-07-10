@@ -1,15 +1,5 @@
 class SurveysController < ApplicationController
-	skip_before_action :verify_authenticity_token
-	protect_from_forgery prepend: true
-
-	after_action :cors_set_access_control_headers
-
-	def cors_set_access_control_headers
-	  headers['Access-Control-Allow-Origin'] = '*'
-	  headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-	  headers['Access-Control-Max-Age'] = "1728000"
-	end
-  
+	protect_from_forgery prepend: true  
 
 	def index
 		@surveys = Survey.includes(:intervals).all
@@ -22,10 +12,16 @@ class SurveysController < ApplicationController
 	end
 	
 	def update
-		survey = Survey.find(params[:id])
-		survey.update(survey_params)
-		render :json => survey.as_json(include: :intervals).to_json		
+		@survey = Survey.find(params[:id])
+		@survey.update(survey_params)
+		render :json => @survey.as_json(include: :intervals).to_json		
 	end
+
+	def create
+		@survey = Survey.create(survey_params)
+		render :json => @survey.as_json(include: :intervals).to_json		
+	end
+
 
 
 
@@ -42,7 +38,7 @@ class SurveysController < ApplicationController
 
 	private
 	def survey_params
-		params.require(:survey).permit(:title, :description)
+		params.require(:survey).permit(:title, :description, :intervals)
 	end
 
 	

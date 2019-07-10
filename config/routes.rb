@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root "surveys#new"
 
-  resources :surveys, only: [:index, :show, :update] do
+  resources :surveys, only: [:index, :show, :update, :create] do
     resources :questions
   end
 
