@@ -26,10 +26,11 @@ class SurveysController < ApplicationController
 	end
 
 	def create
-		survey = Survey.create(survey_params.except("intervals"))
-		if survey_params["intervals"].any?
-			interval = survey_params["intervals"].first
-			interval = Interval.create(interval)
+		req_survey = params.require("survey").permit("title", "description")
+		survey = Survey.create(req_survey)
+		if params["survey"]["intervals"].any?
+			req_interval = params["survey"].require("intervals").first.permit("id", "start_time", "end_time")
+			interval = Interval.create(req_interval)
 			SurveyInterval.create(survey: survey, interval: interval)
 		end
 		render :json => survey.as_json(include: "intervals").to_json	
