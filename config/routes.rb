@@ -4,8 +4,10 @@ Rails.application.routes.draw do
   root "surveys#new"
 
   resources :surveys, only: [:index, :show, :update, :create] do
-    resources :questions
+    resources :questions, only: [:index, :create]
   end
+
+  resources :questions, only: [:show, :update]
 
   resources :question_responses
   resources :survey_results
