@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+	protect_from_forgery prepend: true
 
   def new
 		@question = Question.new
@@ -14,6 +15,11 @@ class QuestionsController < ApplicationController
 		else
 			render 'new'
 		end
+	end
+
+	def index
+		questions = Question.where(survey_id: params[:survey_id])
+		render :json => questions.to_json
 	end
 
 	private
