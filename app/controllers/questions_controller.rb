@@ -1,20 +1,14 @@
 class QuestionsController < ApplicationController
 	protect_from_forgery prepend: true
 
-  def new
-		@question = Question.new
-		@question[:survey_id] = params[:survey_id]
-		render 'new'
-  end
-
 	def create
-		@question = Question.new(question_params)
+		survey_id = params.require("survey_id")
+		@survey = Survey.find(survey_id)
 
-		if @question.save
-	  	redirect_to survey_url(params[:survey_id])
-		else
-			render 'new'
-		end
+		req_question = params.require("question").permit("content")
+		req_question["survey"] = @survey;
+		saved_question = Question.create(req_question)
+		render :json => saved_question.to_json
 	end
 
 	def index
