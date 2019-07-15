@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-interval1 = Interval.create!(start_time: Date.yesterday)
+forever_interval = Interval.create!(start_time: Date.new(1, 1, 1), end_time: Date.new(3000, 1, 1))
 survey1 = Survey.create!(
     title: "This is the inital Survey deployed to mobile devices.", 
     description: "Please answer questions on a scale 1 - 5")

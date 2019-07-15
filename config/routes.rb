@@ -12,6 +12,6 @@ Rails.application.routes.draw do
   resources :question_responses
   resources :survey_results
 
-  get '/active-survey', to: 'surveys#get_active'
+  get '/active-surveys', to: 'surveys#get_active'
 
 end

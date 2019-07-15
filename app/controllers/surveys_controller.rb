@@ -36,18 +36,16 @@ class SurveysController < ApplicationController
 		render :json => survey.as_json(include: "intervals").to_json	
 	end
 
-
-
-
 	def get_active
-		survey = Survey.find_by(is_active: :true)
-		questions = Question.select('id, content').where(survey_id: survey.id)
-		
-		respond_to do |format|
-			msg = {id: survey.id, title: survey.title, 
-				description: survey.description, questions: questions}
-			format.json  { render :json => msg }
+		survey_intervals = SurveyInterval.all
+		surveys = []
+		for survey_interval in survey_intervals do
+			interval = Interval.find(survey_interval.interval_id)
+			if interval.start_time.past? and (interval.end_time == nil or interval.end_time.future?)
+				surveys << Survey.includes("intervals", "questions").find(survey_interval.survey_id)
+			end			
 		end
+		render :json => surveys.as_json(include: "intervals", include: "questions").to_json
 	end
 
 	private 
