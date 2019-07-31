@@ -13,9 +13,8 @@ class SurveyResultsController < ApplicationController
 			question = Question.find(qr[:question_id])
 			response = qr[:response]
 
-			question_response = QuestionResponse.new(response: response, 
+			question_response = QuestionResponse.create(response: response, 
 				question: question, survey_result: survey_result)
-			question_response.save
 		}
 
 		respond_to do |format|
