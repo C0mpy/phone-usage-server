@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_07_164058) do
+ActiveRecord::Schema.define(version: 2019_06_23_190845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 2019_07_07_164058) do
   create_table "intervals", force: :cascade do |t|
     t.datetime "start_time"
     t.datetime "end_time"
+    t.bigint "survey_result_id"
+    t.index ["survey_result_id"], name: "index_intervals_on_survey_result_id"
   end
 
   create_table "question_responses", force: :cascade do |t|
@@ -38,18 +40,9 @@ ActiveRecord::Schema.define(version: 2019_07_07_164058) do
     t.index ["survey_id"], name: "index_questions_on_survey_id"
   end
 
-  create_table "survey_intervals", force: :cascade do |t|
-    t.bigint "survey_id"
-    t.bigint "interval_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["interval_id"], name: "index_survey_intervals_on_interval_id"
-    t.index ["survey_id"], name: "index_survey_intervals_on_survey_id"
-  end
-
   create_table "survey_results", force: :cascade do |t|
     t.bigint "survey_id"
-    t.string "user_uuid"
+    t.string "uuid"
     t.index ["survey_id"], name: "index_survey_results_on_survey_id"
   end
 
@@ -63,15 +56,16 @@ ActiveRecord::Schema.define(version: 2019_07_07_164058) do
   create_table "surveys", force: :cascade do |t|
     t.string "title"
     t.text "description"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "intervals", "survey_results"
   add_foreign_key "question_responses", "questions"
   add_foreign_key "question_responses", "survey_results"
   add_foreign_key "questions", "surveys"
-  add_foreign_key "survey_intervals", "intervals"
-  add_foreign_key "survey_intervals", "surveys"
   add_foreign_key "survey_results", "surveys"
   add_foreign_key "survey_results_intervals", "intervals"
   add_foreign_key "survey_results_intervals", "survey_results"

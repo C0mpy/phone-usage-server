@@ -1,4 +1,4 @@
 class Interval < ApplicationRecord
   validates :start_time, presence: true
-  has_many :surveys
+  belongs_to :survey_result
 end
