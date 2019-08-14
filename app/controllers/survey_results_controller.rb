@@ -6,7 +6,7 @@ class SurveyResultsController < ApplicationController
 		render :json => survey_results.as_json(
 			include: [{ question_responses: 
 				{ include: { question: { only: [:content]}}}}, :intervals],
-			only: [:question_responses, :intervals, :uuid]).to_json
+			only: [:id, :question_responses, :intervals, :uuid]).to_json
 	end
 
 	def create
