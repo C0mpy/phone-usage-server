@@ -1,21 +1,37 @@
 class SurveyResultsController < ApplicationController
+	protect_from_forgery prepend: true
 
 	def index
-		@survey_results = SurveyResult.all
+		survey_results = SurveyResult.includes(["question_responses", "intervals"]).where(survey_id: params[:survey_id])
+		render :json => survey_results.as_json(
+			include: [{ question_responses: 
+				{ include: { question: { only: [:content]}}}}, :intervals],
+			only: [:question_responses, :intervals, :uuid]).to_json
 	end
 
-	skip_before_action :verify_authenticity_token
 	def create
 		req_survey_result = params.require("survey_result").permit("id", "uuid", "survey_id", "question_responses": [])
 		survey_result = SurveyResult.find_by("survey_id": req_survey_result["survey_id"], "uuid": req_survey_result["uuid"])
-		puts survey_result.inspect
 		if survey_result.nil?
 			survey_result = SurveyResult.create!(req_survey_result)
+			create_question_responses(survey_result["id"], req_survey_result)
 		else
-			
 			Interval.where(survey_result_id: survey_result.id).destroy_all
 		end
 		create_intervals(survey_result)
+	end
+
+	private
+	def create_question_responses(survey_result_id, survey_result)
+		req_question_responses = params["question_responses"] 
+		puts req_question_responses.inspect
+		req_question_responses.each { |question_response|
+			QuestionResponse.create!(
+				survey_result_id: survey_result_id,
+				question_id: question_response["question_id"],
+				response: question_response["response"]
+			) 
+		}
 	end
 
 	private

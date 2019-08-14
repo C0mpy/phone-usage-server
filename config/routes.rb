@@ -5,12 +5,14 @@ Rails.application.routes.draw do
 
   resources :surveys, only: [:index, :show, :update, :create] do
     resources :questions, only: [:index, :create]
+    resources :survey_results, only: [:index]
   end
 
   resources :questions, only: [:show, :update]
 
   resources :question_responses
-  resources :survey_results
+
+  resources :survey_results, only: [:create]
 
   get '/active-surveys', to: 'surveys#get_active'
 
