@@ -21,6 +21,18 @@ class SurveyResultsController < ApplicationController
 		create_intervals(survey_result)
 	end
 
+	def show
+		survey_result_id = params[:id]
+		survey_result = SurveyResult.find(survey_result_id)
+		render :json => survey_result.as_json(
+			include: 
+			[{ question_responses: { include: { question: { only: [:content]}}}}, 
+			   :intervals, 
+			   :survey
+			],
+			only: [:id, :survey, :question_responses, :intervals, :uuid]).to_json
+	end
+
 	private
 	def create_question_responses(survey_result_id, survey_result)
 		req_question_responses = params["question_responses"] 
@@ -43,23 +55,6 @@ class SurveyResultsController < ApplicationController
 				end_time: Time.at(interval["end_time"].to_i/1000),
 				survey_result_id: survey_result.id) 
 		}
-	end
-
-
-
-
-
-
-	def show
-		survey_result_id = params[:id]
-		survey_result = SurveyResult.find(survey_result_id)
-		@survey = Survey.find(survey_result[:survey_id])
-		@question_responses = QuestionResponse.where(survey_result_id: survey_result_id)
-
-		@question_responses.each { |qr|
-			qr.question = Question.find(qr.question_id)
-		}
-
 	end
 
 	private
