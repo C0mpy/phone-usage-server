@@ -15,5 +15,6 @@ Rails.application.routes.draw do
   resources :survey_results, only: [:show, :create]
 
   get '/active-surveys', to: 'surveys#get_active'
+  get '/surveys/:id/json', to: 'surveys#json'
 
 end

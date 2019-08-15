@@ -31,6 +31,21 @@ class SurveysController < ApplicationController
 		render :json => surveys.as_json(include: "questions").to_json
 	end
 
+	def json
+		id = params.require("id")
+		survey = Survey.find(id)
+		render :json => 
+		survey.as_json(include: [
+			{ survey_results: { include: [
+				{ question_responses: { include: [
+					{ question: { only: [:content] }}
+				], only: [:question, :response]}},
+				:intervals
+			], only: [:question_responses, :intervals, :uuid]}},
+			:questions
+		], except: [:created_at, :updated_at]).to_json
+	end
+
 	private 
 	def survey_params
 		params.require(:survey).permit(:title, :description, :start_time, :end_time)
