@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :question_responses
 
-  resources :survey_results, only: [:show]
+  resources :survey_results, only: [:show, :create]
 
   get '/active-surveys', to: 'surveys#get_active'
 
