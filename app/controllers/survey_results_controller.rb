@@ -36,7 +36,6 @@ class SurveyResultsController < ApplicationController
 	private
 	def create_question_responses(survey_result_id, survey_result)
 		req_question_responses = params["question_responses"] 
-		puts req_question_responses.inspect
 		req_question_responses.each { |question_response|
 			QuestionResponse.create!(
 				survey_result_id: survey_result_id,
